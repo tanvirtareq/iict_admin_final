@@ -1,21 +1,58 @@
 {
   "project_info": {
-    "project_number": "814705352924",
-    "firebase_url": "https://iict-cafe-admin.firebaseio.com",
-    "project_id": "iict-cafe-admin",
-    "storage_bucket": "iict-cafe-admin.appspot.com"
+    "project_number": "525712737364",
+    "firebase_url": "https://iictcafebeta.firebaseio.com",
+    "project_id": "iictcafebeta",
+    "storage_bucket": "iictcafebeta.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:814705352924:android:d332f2f33424dfb0295419",
+        "mobilesdk_app_id": "1:525712737364:android:f91cb697b34f30f5",
+        "android_client_info": {
+          "package_name": "com.example.iictbeta2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "525712737364-qojv32h27k1eme9mgmiupubhd4r555m2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.iictbeta2",
+            "certificate_hash": "7efaf05a83534d8e07558a4747b5b100588a99d0"
+          }
+        },
+        {
+          "client_id": "525712737364-ml7ia8novs2a1h2djg1enc2u387nh33l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbNwpe9LPcVaSzC9bMx3ryRI6LbgFWvtg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "525712737364-ml7ia8novs2a1h2djg1enc2u387nh33l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525712737364:android:49a9dcbceeaf402e43d9c1",
         "android_client_info": {
           "package_name": "com.example.iictcafeadmin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "814705352924-pediqu1k8gieef85h14ea9p7uu36kh25.apps.googleusercontent.com",
+          "client_id": "525712737364-q26odln1db5k8ub2es4qr3ecuns8mj0v.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.iictcafeadmin",
@@ -23,20 +60,20 @@
           }
         },
         {
-          "client_id": "814705352924-n8kbo2h04bckpg5b9nge9jaabs3gtm2a.apps.googleusercontent.com",
+          "client_id": "525712737364-ml7ia8novs2a1h2djg1enc2u387nh33l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyABo0xhp7aHKVYDLh-bE18cJLx1gdhu-Q8"
+          "current_key": "AIzaSyCbNwpe9LPcVaSzC9bMx3ryRI6LbgFWvtg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "814705352924-n8kbo2h04bckpg5b9nge9jaabs3gtm2a.apps.googleusercontent.com",
+              "client_id": "525712737364-ml7ia8novs2a1h2djg1enc2u387nh33l.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

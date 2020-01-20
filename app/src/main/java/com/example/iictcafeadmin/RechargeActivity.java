@@ -1,17 +1,32 @@
 package com.example.iictcafeadmin;
+
+
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.Result;
+
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -80,16 +95,9 @@ public class RechargeActivity extends AppCompatActivity implements ZXingScannerV
         }
     }
 
-    public void displayAlertMessage(String message, DialogInterface.OnClickListener listener){
-
-        new AlertDialog.Builder(RechargeActivity.this).setMessage(message)
-                .setPositiveButton("OK", listener)
-                .setNegativeButton("Cancel", null).create().show();
-    }
-
-
     @Override
-    protected void onResume() {
+    public void onResume() {
+
         super.onResume();
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -107,29 +115,122 @@ public class RechargeActivity extends AppCompatActivity implements ZXingScannerV
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onDestroy() {
 
+        super.onDestroy();
         scannerView.stopCamera();
+    }
+
+    public void displayAlertMessage(String message, DialogInterface.OnClickListener listener){
+
+        new AlertDialog.Builder(RechargeActivity.this).setMessage(message)
+                .setPositiveButton("OK", listener)
+                .setNegativeButton("Cancel", null).create().show();
     }
 
     @Override
     public void handleResult(Result result) {
+        final String uid = result.getText();
+        //Toast.makeText(RechargeActivity.this, uid, Toast.LENGTH_LONG).show();
 
-        final String out = result.getText();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(RechargeActivity.this);
-        builder.setTitle("Output");
-        builder.setMessage(out);
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        ref = FirebaseDatabase.getInstance().getReference().child("users").child(uid);
+
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                scannerView.resumeCameraPreview(RechargeActivity.this);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+
+                    if(ds.getKey().equals("display_name") || ds.getKey().equals("balance")) {
+                        flag++;
+                        if(ds.getKey().equals("display_name")){
+                            display_name = ds.getValue().toString();
+                        }
+                        if(ds.getKey().equals("balance")){
+                            balance_str = ds.getValue().toString();
+                        }
+                        //Toast.makeText(RechargeActivity.this, ds.getValue().toString(), Toast.LENGTH_LONG).show();
+                    }
+
+                    if(flag == 2){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(RechargeActivity.this);
+                        View view = getLayoutInflater().inflate(R.layout.balance_input_dialogue, null);
+
+                        TextView balanceView = view.findViewById(R.id.balancetext);
+                        TextView nameview = view.findViewById(R.id.nametext);
+                        final EditText editAmount = view.findViewById(R.id.editbalance);
+                        Button rchg_btn = view.findViewById(R.id.rchgbtn);
+                        Button cancel_btn = view.findViewById(R.id.cancelbtn);
+
+                        String name_titl = "Name : ";
+                        String bal_titl = "Current balance : ";
+
+                        bal_titl = bal_titl.concat(balance_str);
+                        final Integer curr_balance = Integer.parseInt(balance_str);
+
+                        nameview.setText(name_titl.concat(display_name));
+                        balanceView.setText(bal_titl.concat(" Taka"));
+
+                        builder.setView(view);
+                        final AlertDialog dialog = builder.create();
+
+                        final String finalBalance_str = balance_str;
+                        rchg_btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(!editAmount.getText().toString().isEmpty()){
+                                    //Toast.makeText(RechargeActivity.this, "Hoisa", Toast.LENGTH_LONG).show();
+                                    Integer add_balance = Integer.parseInt(editAmount.getText().toString());
+                                    recharge_account(uid, curr_balance, add_balance);
+
+                                } else {
+                                    Toast.makeText(RechargeActivity.this, "Please enter the amount", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
+                        cancel_btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.cancel();
+                                Intent intent = new Intent(RechargeActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+
+                        dialog.show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                Toast.makeText(RechargeActivity.this, "Couldn't access database", Toast.LENGTH_LONG).show();
+
             }
         });
+    }
 
-        AlertDialog dialog = builder.create();
-        dialog.show();
+    public void recharge_account(String uid, Integer curr_balance, Integer add_balance){
+
+        FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("balance")
+                .setValue(curr_balance+add_balance).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    startActivity(new Intent(RechargeActivity.this, MainActivity.class));
+                    finish();
+                    Toast.makeText(RechargeActivity.this, "User account successfully recharged", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(RechargeActivity.this, "Operation failed", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 }
