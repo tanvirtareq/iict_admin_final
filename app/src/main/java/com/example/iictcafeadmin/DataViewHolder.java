@@ -11,7 +11,7 @@ public class DataViewHolder extends RecyclerView.ViewHolder {
     public DataViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        nameview = itemView.findViewById(R.id.nameview);
+        nameview = itemView.findViewById(R.id.nameView);
         tableview = itemView.findViewById(R.id.tableno);
     }
 }

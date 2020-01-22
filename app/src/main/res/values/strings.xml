@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">IICT Cafe Admin</string>
+
+    <string-array name="spinner_items">
+
+        <item> Available </item>
+        <item> Not Available </item>
+
+    </string-array>
+
 </resources>

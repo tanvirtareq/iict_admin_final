@@ -107,7 +107,7 @@ public class PendingOrdersActivity extends AppCompatActivity {
                             }
                         });
 
-                        builder.setMessage(model.getOrder());
+                        builder.setMessage(model.getDetails());
                         AlertDialog dialog = builder.create();
                         dialog.show();
 

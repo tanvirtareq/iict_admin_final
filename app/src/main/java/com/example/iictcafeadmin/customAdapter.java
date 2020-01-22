@@ -33,10 +33,10 @@ public class customAdapter extends RecyclerView.Adapter<customAdapter.MyViewHold
         @Override
         public void onBindViewHolder (@NonNull MyViewHolder holder,int position){
             Upload upload = uploadList.get(position);
-            holder.textView.setText(upload.getImageName());
+            holder.textView.setText(upload.getItem_id());
             holder.priceView.setText(upload.getPrice());
             Picasso.get()
-                    .load(upload.getImageUrl())
+                    .load(upload.getImage_url())
                     .placeholder(R.mipmap.ic_launcher_round)
                     .fit()
                     .centerCrop()

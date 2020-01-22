@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageActivity extends AppCompatActivity {
+public class  ImageActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private customAdapter myAdapter;
     private List<Upload> uploadList;
@@ -34,7 +34,7 @@ public class ImageActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressBar=findViewById(R.id.recyclerprogressbarid);
         uploadList = new ArrayList<>();
-        databaseReference= FirebaseDatabase.getInstance().getReference("upload");
+        databaseReference= FirebaseDatabase.getInstance().getReference("food");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

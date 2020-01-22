@@ -47,12 +47,12 @@ public class UpdateMenuActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_update_menu);
         chooseImageButton = findViewById(R.id.chooseImageButton);
         saveImageButton= findViewById(R.id.saveImageButton);
-        loadImageButton=findViewById(R.id.loadImageButton);
+        loadImageButton=findViewById(R.id.updateMenuButton);
 
         imageView= findViewById(R.id.imageViewId);
         progressBar=findViewById(R.id.progressbarid);
 
-        databaseReference= FirebaseDatabase.getInstance().getReference("upload");
+        databaseReference= FirebaseDatabase.getInstance().getReference("food");
         storageReference= FirebaseStorage.getInstance().getReference("upload");
         editText= findViewById(R.id.textid);
         priceText=findViewById(R.id.priceid);
@@ -73,9 +73,9 @@ public class UpdateMenuActivity extends AppCompatActivity implements View.OnClic
                     saveData();
                 }
                 break;
-            case R.id.loadImageButton:
-                Intent intent = new Intent(UpdateMenuActivity.this, ImageActivity.class);
-                startActivity(intent);
+            case R.id.updateMenuButton:
+//                Intent intent = new Intent(UpdateMenuActivity.this, ImageActivity.class);
+//                startActivity(intent);
                 break;
         }
     }
@@ -119,9 +119,16 @@ public class UpdateMenuActivity extends AppCompatActivity implements View.OnClic
 
                         while (!urlTask.isSuccessful());
                         Uri downloadUrl=urlTask.getResult();
-                        Upload upload= new Upload(imageName,downloadUrl.toString(),imagePrice);
+                        //Upload upload= new Upload(imageName, downloadUrl.toString(),imagePrice);
+                        Upload upload= new Upload();
+                        upload.setAvaibality(true);
+                        upload.setImage_url(downloadUrl.toString());
+                        upload.setPrice(Integer.parseInt(imagePrice));
+                        upload.setItem_name(imageName);
 
                         String uploadId = databaseReference.push().getKey();
+
+                        upload.setItem_id(uploadId);
 
                         databaseReference.child(uploadId).setValue(upload);
                     }
