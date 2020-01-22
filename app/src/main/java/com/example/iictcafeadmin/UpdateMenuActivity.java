@@ -29,7 +29,7 @@ import com.squareup.picasso.Picasso;
 
 public class UpdateMenuActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private Button chooseImageButton, saveImageButton ,  loadImageButton;
+    private Button chooseImageButton, saveImageButton ,  updateMenuButton;
     private ImageView imageView;
     private ProgressBar progressBar;
     private EditText editText,priceText;
@@ -47,7 +47,7 @@ public class UpdateMenuActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_update_menu);
         chooseImageButton = findViewById(R.id.chooseImageButton);
         saveImageButton= findViewById(R.id.saveImageButton);
-        loadImageButton=findViewById(R.id.updateMenuButton);
+        updateMenuButton =findViewById(R.id.updateMenuButton);
 
         imageView= findViewById(R.id.imageViewId);
         progressBar=findViewById(R.id.progressbarid);

@@ -55,7 +55,7 @@ public class LogActivity extends AppCompatActivity {
 
         arrayList = new ArrayList<>();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("orders");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("dibba");
         databaseReference.keepSynced(true);
 
         options = new FirebaseRecyclerOptions.Builder<OrderDetails>().setQuery(databaseReference, OrderDetails.class).build();
