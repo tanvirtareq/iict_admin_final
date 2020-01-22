@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -79,22 +80,19 @@ public class PendingOrdersActivity extends AppCompatActivity {
                         builder.setPositiveButton("DELIVER", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("delivery")
-                                        .child(model.getOid());
-
-                                ref.setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                FirebaseDatabase.getInstance().getReference().child("notifications")
+                                        .child("foruser").child(model.getUid()).child(model.getOid()).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()){
-                                            databaseReference.child(model.getOid()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if(task.isSuccessful()){
-                                                        Toast.makeText(PendingOrdersActivity.this, "Order Delivered", Toast.LENGTH_LONG).show();
-                                                    }
+                                    public void onSuccess(Void aVoid) {
+                                        databaseReference.child(model.getOid()).removeValue()
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if(task.isSuccessful()){
+                                                    Toast.makeText(PendingOrdersActivity.this, "Order Delivered", Toast.LENGTH_LONG).show();
                                                 }
-                                            });
-                                        }
+                                            }
+                                        });
                                     }
                                 });
                             }
