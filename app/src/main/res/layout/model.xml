@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="140dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
+    android:layout_margin="5dp"
     app:cardCornerRadius="10dp"
     app:cardElevation="10dp">
 
@@ -14,29 +14,38 @@
 
         <LinearLayout
             android:background="@color/colorPrimary"
-            android:layout_width="80dp"
+            android:layout_width="110dp"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:gravity="center">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="table"
-                android:textColor="#FFFFFF"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:textSize="20sp"/>
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tableno"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="40sp"
-                android:text="5"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:textAlignment="center"
-                android:padding="10dp"/>
+                <TextView
+                    android:id="@+id/table_or_roomView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="table"
+                    android:textColor="#FFFFFF"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/tableno"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="40sp"
+                    android:text="5"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:textAlignment="center"
+                    android:padding="10dp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -49,10 +58,20 @@
                 android:id="@+id/nameView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
-                android:textSize="15sp"
+                android:textSize="18sp"
+                android:text="name"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/detailsView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 android:text="name"
                 android:textColor="@color/colorPrimary" />
 

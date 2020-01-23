@@ -69,6 +69,8 @@ public class PendingOrdersActivity extends AppCompatActivity {
             protected void onBindViewHolder( DataViewHolder holder, int position, @NonNull final OrderDetails model) {
                 holder.nameview.setText(model.getDisplay_name());
                 holder.tableview.setText(model.getTableno());
+                holder.tableOrRoomView.setText(model.getTable_or_room());
+                holder.detailsView.setText(model.getDetails());
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

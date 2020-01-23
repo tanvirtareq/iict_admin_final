@@ -7,6 +7,20 @@ public class OrderDetails {
     public String display_name;
     public String table_no;
 
+    public String getTable_no() {
+        return table_no;
+    }
+
+    public String getTable_or_room() {
+        return table_or_room;
+    }
+
+    public void setTable_or_room(String table_or_room) {
+        this.table_or_room = table_or_room;
+    }
+
+    public String table_or_room;
+
     public String getDetails() {
         return details;
     }

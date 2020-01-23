@@ -58,8 +58,9 @@ public class UpdateMenuActivity extends AppCompatActivity implements View.OnClic
         priceText=findViewById(R.id.priceid);
         chooseImageButton.setOnClickListener(this);
         saveImageButton.setOnClickListener(this);
-        loadImageButton.setOnClickListener(this);
+        updateMenuButton.setOnClickListener(this);
     }
+
     public void onClick(View v){
         switch (v.getId()){
             case R.id.chooseImageButton:
@@ -74,11 +75,12 @@ public class UpdateMenuActivity extends AppCompatActivity implements View.OnClic
                 }
                 break;
             case R.id.updateMenuButton:
-//                Intent intent = new Intent(UpdateMenuActivity.this, ImageActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(UpdateMenuActivity.this, AvailabilityUpdateActivity.class);
+                startActivity(intent);
                 break;
         }
     }
+
     void openFileChooser(){
         Intent intent = new Intent();
         intent.setType("image/*");

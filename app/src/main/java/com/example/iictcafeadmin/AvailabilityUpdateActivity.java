@@ -18,12 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class AvailabilityUpdateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AvailabilityUpdateActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ArrayList<OrderDetails> arrayList;
@@ -66,10 +67,33 @@ public class AvailabilityUpdateActivity extends AppCompatActivity implements Ada
         adapter = new FirebaseRecyclerAdapter<UpdateItem, MenuViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull MenuViewHolder holder, int i, @NonNull UpdateItem updateItem) {
-                boolean av = updateItem.isAvaibality();
+
+                final boolean flag = updateItem.isAvaibality();
+                final String itemid = updateItem.getItem_id();
 
                 holder.itemName.setText(updateItem.getItem_name());
+                if(!flag) holder.updateBtn.setText("Set Available");
+                else holder.updateBtn.setText("Set Unavailable");
+
                 holder.updateBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        FirebaseDatabase.getInstance().getReference()
+                                .child("food").child(itemid).child("avaibality")
+                                .setValue(!flag)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        if(flag) Toast.makeText(AvailabilityUpdateActivity.this, "Availability set to false" , Toast.LENGTH_LONG).show();
+                                        else Toast.makeText(AvailabilityUpdateActivity.this, "Availability set to false" , Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+                    }
+                });
+
+                /*holder.updateBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mBuilder = new AlertDialog.Builder(AvailabilityUpdateActivity.this);
@@ -104,7 +128,7 @@ public class AvailabilityUpdateActivity extends AppCompatActivity implements Ada
                             }
                         });
                     }
-                });
+                });*/
             }
 
             @NonNull
@@ -112,17 +136,10 @@ public class AvailabilityUpdateActivity extends AppCompatActivity implements Ada
             public MenuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 return new MenuViewHolder(LayoutInflater.from(AvailabilityUpdateActivity.this).inflate(R.layout.menu_view_holder, parent, false));
             }
+
+
         };
-    }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String text = parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(), text, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
+        recyclerView.setAdapter(adapter);
     }
 }

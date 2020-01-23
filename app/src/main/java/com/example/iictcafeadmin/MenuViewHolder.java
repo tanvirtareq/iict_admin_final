@@ -16,6 +16,6 @@ public class MenuViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         itemName = itemView.findViewById(R.id.itemNameView);
-       // updateBtn = itemView.findViewById(R.id.updateMenuButton);
+        updateBtn = itemView.findViewById(R.id.update_btn);
     }
 }
